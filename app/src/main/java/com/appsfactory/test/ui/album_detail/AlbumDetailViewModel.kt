@@ -1,11 +1,11 @@
-package com.appsfactory.test.ui.album
+package com.appsfactory.test.ui.album_detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.appsfactory.test.domain.album.Album
-import com.appsfactory.test.domain.artist.Artist
 import com.appsfactory.test.domain.repository.LastFMRepository
+import com.appsfactory.test.domain.track.Track
 import com.appsfactory.test.domain.util.Result
 import com.appsfactory.test.domain.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,42 +18,45 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AlbumViewModel @Inject constructor(
+class AlbumDetailViewModel @Inject constructor(
     stateHandle: SavedStateHandle,
     private val repository: LastFMRepository
 ) : ViewModel() {
 
-    private val artist = stateHandle.get<Artist>("artist")!!
+    private val _album = stateHandle.get<Album>("album")!!
+    val album = MutableStateFlow(_album).asStateFlow()
 
-    private val _uiState = MutableStateFlow<UiState<List<Album>>>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState<List<Track>>>(UiState.Loading)
     val uiState = _uiState.asStateFlow()
 
-    private val _uiEvents = Channel<AlbumEvent>()
+    private val _uiEvents = Channel<AlbumDetailEvent>()
     val uiEvents = _uiEvents.receiveAsFlow()
 
     init {
-        getTopAlbums(artist)
+        getTracks(_album)
     }
 
-    private fun getTopAlbums(artist: Artist) = viewModelScope.launch {
-        repository.getTopAlbumsOfArtist(artist.name).collectLatest { result ->
+    private fun getTracks(album: Album) = viewModelScope.launch {
+        repository.getTracks(
+            artist = album.artist.name,
+            album = album.name
+        ).collectLatest { result ->
             when (result) {
                 is Result.Success -> {
                     _uiState.emit(UiState.Success(result.data))
                 }
                 is Result.Error -> {
-                    _uiEvents.send(AlbumEvent.ShowError(result.error))
+                    _uiEvents.send(AlbumDetailEvent.ShowError(result.error))
                 }
             }
         }
     }
 
-    fun onAlbumClicked(album: Album) = viewModelScope.launch {
-        _uiEvents.send(AlbumEvent.NavigateToDetailsScreen(album))
+    fun onTrackClicked(track: Track) = viewModelScope.launch {
+
     }
 
-    sealed class AlbumEvent {
-        data class NavigateToDetailsScreen(val album: Album) : AlbumEvent()
-        data class ShowError(val error: String) : AlbumEvent()
+    sealed class AlbumDetailEvent {
+        data class ShowError(val msg: String) : AlbumDetailEvent()
     }
 }

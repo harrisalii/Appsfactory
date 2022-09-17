@@ -11,5 +11,5 @@ interface LastFMRepository {
 
     suspend fun getTopAlbumsOfArtist(name: String): Flow<Result<List<Album>>>
 
-    suspend fun getTopTracksOfArtist(name: String): Flow<Result<List<Track>>>
+    suspend fun getTracks(artist: String, album: String): Flow<Result<List<Track>>>
 }

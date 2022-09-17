@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="10dp"
-    android:layout_marginVertical="10dp"
+    android:layout_margin="10dp"
     app:cardCornerRadius="10dp"
-    app:cardElevation="8dp">
+    app:cardElevation="5dp"
+    tools:context=".ui.search_artist.ArtistAdapter">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/artist_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -39,10 +39,8 @@
             app:drawableStartCompat="@drawable/ic_baseline_person_24"
             app:layout_constraintBottom_toTopOf="@+id/url"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/image_view"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
             tools:text="Cheryl Cole" />
 
         <TextView
@@ -52,14 +50,16 @@
             android:drawablePadding="5dp"
             android:elegantTextHeight="true"
             android:maxLines="1"
+            android:autoLink="web"
             android:textColor="@color/black"
             android:textStyle="italic"
+            android:ellipsize="end"
+            android:textSize="12sp"
             app:drawableStartCompat="@drawable/ic_baseline_link_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/name"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/name"
-            app:layout_constraintTop_toBottomOf="@+id/name"
+            app:layout_constraintEnd_toEndOf="@+id/artist_name"
+            app:layout_constraintStart_toStartOf="@+id/artist_name"
+            app:layout_constraintTop_toBottomOf="@+id/artist_name"
             tools:text="http://www.google.com" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

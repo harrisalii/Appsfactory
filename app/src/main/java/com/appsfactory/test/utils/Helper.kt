@@ -10,3 +10,7 @@ inline fun <reified T> logDebug(msg: String?) {
 inline fun <reified T> logError(msg: String?) {
     Log.e(T::class.java.simpleName, msg.ifNull { "null" })
 }
+
+inline fun <reified T> logInfo(msg: String?) {
+    Log.i(T::class.java.simpleName, msg.ifNull { "null" })
+}

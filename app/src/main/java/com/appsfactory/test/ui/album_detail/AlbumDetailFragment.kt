@@ -1,4 +1,4 @@
-package com.appsfactory.test.ui.search_artist
+package com.appsfactory.test.ui.album_detail
 
 import android.os.Bundle
 import android.view.View
@@ -8,9 +8,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
+import coil.load
+import coil.transform.BlurTransformation
 import com.appsfactory.test.R
-import com.appsfactory.test.databinding.FragmentSearchArtistBinding
+import com.appsfactory.test.databinding.FragmentAlbumDetailBinding
 import com.appsfactory.test.domain.util.UiState
 import com.appsfactory.test.utils.extensions.progressDialog
 import com.appsfactory.test.utils.extensions.showToast
@@ -19,32 +20,29 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchArtistFragment : Fragment(R.layout.fragment_search_artist) {
+class AlbumDetailFragment : Fragment(R.layout.fragment_album_detail) {
 
-    private var _binding: FragmentSearchArtistBinding? = null
+    private var _binding: FragmentAlbumDetailBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<SearchArtistViewModel>()
-    private lateinit var artistAdapter: ArtistAdapter
+    private val viewModel by viewModels<AlbumDetailViewModel>()
+    private lateinit var trackAdapter: TrackAdapter
 
     private lateinit var progressDialog: AlertDialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding = FragmentSearchArtistBinding.bind(view)
+        _binding = FragmentAlbumDetailBinding.bind(view)
 
         progressDialog = progressDialog()
 
-        artistAdapter = ArtistAdapter {
-            viewModel.onArtistClicked(it)
+        trackAdapter = TrackAdapter {
+            viewModel.onTrackClicked(it)
         }
 
         binding.apply {
-            artistRecyclerView.apply {
-                setHasFixedSize(true)
-                adapter = artistAdapter
-            }
+            trackRecyclerView.adapter = trackAdapter
         }
 
         initObservers()
@@ -54,13 +52,32 @@ class SearchArtistFragment : Fragment(R.layout.fragment_search_artist) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
+                    viewModel.album.collectLatest { album ->
+                        binding.apply {
+                            albumName.text = album.name
+                            artistName.text = album.artist.name
+                            albumImageView.load(album.imageUrl) {
+                                crossfade(true)
+                                transformations(
+                                    BlurTransformation(
+                                        context = requireContext(),
+                                        radius = 25f,
+                                        sampling = 2f
+                                    )
+                                )
+                                build()
+                            }
+                        }
+                    }
+                }
+                launch {
                     viewModel.uiState.collectLatest { state ->
                         when (state) {
                             is UiState.Loading -> {
                                 progressDialog.show()
                             }
                             is UiState.Success -> {
-                                artistAdapter.submitList(state.data)
+                                trackAdapter.submitList(state.data)
                                 progressDialog.dismiss()
                             }
                         }
@@ -69,15 +86,8 @@ class SearchArtistFragment : Fragment(R.layout.fragment_search_artist) {
                 launch {
                     viewModel.uiEvents.collectLatest { event ->
                         when (event) {
-                            is SearchArtistViewModel.SearchArtistEvent.NavigateToAlbumScreen -> {
-                                val direction =
-                                    SearchArtistFragmentDirections.actionSearchArtistFragmentToAlbumFragment(
-                                        event.artist
-                                    )
-                                findNavController().navigate(direction)
-                            }
-                            is SearchArtistViewModel.SearchArtistEvent.ShowError -> {
-                                showToast(event.error)
+                            is AlbumDetailViewModel.AlbumDetailEvent.ShowError -> {
+                                showToast(event.msg)
                                 progressDialog.dismiss()
                             }
                         }

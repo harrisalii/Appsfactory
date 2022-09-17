@@ -34,8 +34,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             delay(3000)
-            val action = HomeFragmentDirections.actionHomeFragmentToSearchArtistFragment()
-            findNavController().navigate(action)
+            val direction = HomeFragmentDirections.actionHomeFragmentToSearchArtistFragment()
+            findNavController().navigate(direction)
         }
     }
 

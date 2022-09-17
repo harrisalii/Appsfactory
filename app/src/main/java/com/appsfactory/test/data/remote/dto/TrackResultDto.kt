@@ -3,11 +3,16 @@ package com.appsfactory.test.data.remote.dto
 import com.google.gson.annotations.SerializedName
 
 data class TrackResultDto(
-    @SerializedName("toptracks")
-    val topTracks: TopTrackDto
+    @SerializedName("album")
+    val album: AlbumDetailDto
 ) {
 
-    data class TopTrackDto(
+    data class AlbumDetailDto(
+        @SerializedName("tracks")
+        val tracksInfo: TrackInfoDto
+    )
+
+    data class TrackInfoDto(
         @SerializedName("track")
         val tracks: List<TrackDto>
     )
@@ -17,14 +22,9 @@ data class TrackResultDto(
         val name: String,
         @SerializedName("url")
         val url: String,
+        @SerializedName("duration")
+        val duration: Long?,
         @SerializedName("artist")
-        val artistDto: ArtistResultDto.ArtistDto,
-        @SerializedName("image")
-        val images: List<TrackImageDto>
-    )
-
-    data class TrackImageDto(
-        @SerializedName("#text")
-        val url: String
+        val artistDto: ArtistResultDto.ArtistDto
     )
 }

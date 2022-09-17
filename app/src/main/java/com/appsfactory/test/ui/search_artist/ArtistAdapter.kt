@@ -39,7 +39,7 @@ class ArtistAdapter(
 
         fun bind(artist: Artist) {
             binding.apply {
-                name.text = artist.name
+                artistName.text = artist.name
                 url.text = artist.url
                 imageView.load(artist.imageUrl)
             }

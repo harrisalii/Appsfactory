@@ -6,5 +6,5 @@ data class Track(
     val name: String,
     val url: String,
     val artist: Artist,
-    val imageUrl: String
+    val duration: String
 )

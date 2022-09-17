@@ -31,7 +31,16 @@ object AppModule {
             HttpLoggingInterceptor.Level.NONE
         }
         val okhttpBuilder = OkHttpClient.Builder().apply {
-            addInterceptor(httpLoggingInterceptor)
+            addInterceptor(httpLoggingInterceptor).addInterceptor { chain ->
+                val url = chain
+                    .request()
+                    .url
+                    .newBuilder()
+                    .addQueryParameter("api_key", BuildConfig.LAST_FM_API_KEY)
+                    .addQueryParameter("format", "json")
+                    .build()
+                chain.proceed(chain.request().newBuilder().url(url).build())
+            }
         }
         return okhttpBuilder.build()
     }

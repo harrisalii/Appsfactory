@@ -21,18 +21,15 @@ abstract class BaseRepository {
                 val dto = result.body()!!
                 emit(Result.Success(dto.response()))
             } else {
-                logError<BaseRepository>("Error!")
                 emit(Result.Error("Request failed. Please try again later."))
             }
         } catch (e: IOException) {
-            logError<BaseRepository>("Error IO!")
             emit(Result.Error("Please check your internet connection!"))
         } catch (e: HttpException) {
-            logError<BaseRepository>("Error HTTP!")
             emit(Result.Error("Request failed. Please try again later."))
         }
     }.catch { e ->
-        logError<BaseRepository>("T: ${T::class.java.simpleName}, V: ${V::class.java.simpleName}")
-        emit(Result.Error("Unknown error occurred. ${e.message}"))
+        logError<BaseRepository>("Flow Error -> ${e.message}")
+        emit(Result.Error("Unknown error occurred."))
     }
 }

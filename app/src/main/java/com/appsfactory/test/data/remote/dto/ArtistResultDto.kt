@@ -20,7 +20,7 @@ data class ArtistResultDto(
     data class ArtistDto(
         @SerializedName("name")
         val name: String,
-        @SerializedName("listeners")
+        @SerializedName("url")
         val url: String,
         @SerializedName("image")
         val images: List<ArtistImageDto>?

@@ -1,10 +1,11 @@
 package com.appsfactory.test.data.mappers
 
+import android.text.format.DateUtils
 import com.appsfactory.test.data.remote.dto.TrackResultDto
 import com.appsfactory.test.domain.track.Track
 
 fun TrackResultDto.toTracks(): List<Track> {
-    return topTracks.tracks.map {
+    return album.tracksInfo.tracks.map {
         it.toTrack()
     }
 }
@@ -14,15 +15,17 @@ fun TrackResultDto.TrackDto.toTrack(): Track {
         name = name,
         url = url,
         artist = artistDto.toArtist(),
-        imageUrl = images.last().url
+        duration = DateUtils.formatElapsedTime(duration ?: 0L)
     )
 }
 
 fun Track.toTrackDto(): TrackResultDto.TrackDto {
+    val time = duration.split(":")
+    val duration = (time.first().toInt() * 60) + time.last().toInt()
     return TrackResultDto.TrackDto(
         name = name,
         url = url,
         artistDto = artist.toArtistDto(),
-        images = listOf(TrackResultDto.TrackImageDto(url = imageUrl))
+        duration = duration.toLong()
     )
 }

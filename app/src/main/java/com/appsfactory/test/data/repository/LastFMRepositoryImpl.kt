@@ -40,10 +40,10 @@ class LastFMRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getTopTracksOfArtist(name: String): Flow<Result<List<Track>>> {
+    override suspend fun getTracks(artist: String, album: String): Flow<Result<List<Track>>> {
         return makeRequest(
             request = {
-                api.getTopTracks(name = name)
+                api.getTracks(artist = artist, album = album)
             },
             response = {
                 toTracks()
