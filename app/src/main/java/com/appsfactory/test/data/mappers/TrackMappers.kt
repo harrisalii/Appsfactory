@@ -5,9 +5,9 @@ import com.appsfactory.test.data.remote.dto.TrackResultDto
 import com.appsfactory.test.domain.track.Track
 
 fun TrackResultDto.toTracks(): List<Track> {
-    return album.tracksInfo.tracks.map {
+    return album.tracksInfo?.tracks?.map {
         it.toTrack()
-    }
+    } ?: emptyList()
 }
 
 fun TrackResultDto.TrackDto.toTrack(): Track {

@@ -9,13 +9,15 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
+        app:elevation="0dp"
         android:theme="@style/Theme.AppsfactoryTest.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            app:menu="@menu/menu_main"
             app:popupTheme="@style/Theme.AppsfactoryTest.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>

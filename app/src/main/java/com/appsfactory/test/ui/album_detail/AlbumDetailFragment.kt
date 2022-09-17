@@ -14,6 +14,7 @@ import com.appsfactory.test.R
 import com.appsfactory.test.databinding.FragmentAlbumDetailBinding
 import com.appsfactory.test.domain.util.UiState
 import com.appsfactory.test.utils.extensions.progressDialog
+import com.appsfactory.test.utils.extensions.show
 import com.appsfactory.test.utils.extensions.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -43,6 +44,9 @@ class AlbumDetailFragment : Fragment(R.layout.fragment_album_detail) {
 
         binding.apply {
             trackRecyclerView.adapter = trackAdapter
+            favoriteAlbum.setOnClickListener {
+                viewModel.onFavoriteClicked()
+            }
         }
 
         initObservers()
@@ -57,7 +61,7 @@ class AlbumDetailFragment : Fragment(R.layout.fragment_album_detail) {
                             albumName.text = album.name
                             artistName.text = album.artist.name
                             albumImageView.load(album.imageUrl) {
-                                crossfade(true)
+                                crossfade(durationMillis = 500)
                                 transformations(
                                     BlurTransformation(
                                         context = requireContext(),
@@ -73,11 +77,14 @@ class AlbumDetailFragment : Fragment(R.layout.fragment_album_detail) {
                 launch {
                     viewModel.uiState.collectLatest { state ->
                         when (state) {
-                            is UiState.Loading -> {
-                                progressDialog.show()
-                            }
+                            is UiState.Idle -> return@collectLatest
+                            is UiState.Loading -> progressDialog.show()
                             is UiState.Success -> {
                                 trackAdapter.submitList(state.data)
+                                progressDialog.dismiss()
+                            }
+                            is UiState.NoDataFound -> {
+                                binding.noResultsFound.show()
                                 progressDialog.dismiss()
                             }
                         }
@@ -90,7 +97,17 @@ class AlbumDetailFragment : Fragment(R.layout.fragment_album_detail) {
                                 showToast(event.msg)
                                 progressDialog.dismiss()
                             }
+                            is AlbumDetailViewModel.AlbumDetailEvent.OpenTrackUrl -> {
+
+                            }
                         }
+                    }
+                }
+                launch {
+                    viewModel.isFavorite.collectLatest { isFavorite ->
+                        binding.favoriteAlbum.setImageResource(
+                            if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border
+                        )
                     }
                 }
             }

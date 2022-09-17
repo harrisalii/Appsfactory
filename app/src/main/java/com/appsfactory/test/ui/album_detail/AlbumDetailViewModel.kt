@@ -26,7 +26,10 @@ class AlbumDetailViewModel @Inject constructor(
     private val _album = stateHandle.get<Album>("album")!!
     val album = MutableStateFlow(_album).asStateFlow()
 
-    private val _uiState = MutableStateFlow<UiState<List<Track>>>(UiState.Loading)
+    private val _isFavorite = MutableStateFlow(false)
+    val isFavorite = _isFavorite.asStateFlow()
+
+    private val _uiState = MutableStateFlow<UiState<List<Track>>>(UiState.Idle)
     val uiState = _uiState.asStateFlow()
 
     private val _uiEvents = Channel<AlbumDetailEvent>()
@@ -37,13 +40,20 @@ class AlbumDetailViewModel @Inject constructor(
     }
 
     private fun getTracks(album: Album) = viewModelScope.launch {
+        _uiState.emit(UiState.Loading)
+
         repository.getTracks(
             artist = album.artist.name,
             album = album.name
         ).collectLatest { result ->
             when (result) {
                 is Result.Success -> {
-                    _uiState.emit(UiState.Success(result.data))
+                    val tracks = result.data
+                    if (tracks.isEmpty()) {
+                        _uiState.emit(UiState.NoDataFound)
+                    } else {
+                        _uiState.emit(UiState.Success(result.data))
+                    }
                 }
                 is Result.Error -> {
                     _uiEvents.send(AlbumDetailEvent.ShowError(result.error))
@@ -53,10 +63,16 @@ class AlbumDetailViewModel @Inject constructor(
     }
 
     fun onTrackClicked(track: Track) = viewModelScope.launch {
+        _uiEvents.send(AlbumDetailEvent.OpenTrackUrl(track.url))
+    }
 
+    fun onFavoriteClicked() = viewModelScope.launch {
+
+        _isFavorite.value = !isFavorite.value
     }
 
     sealed class AlbumDetailEvent {
         data class ShowError(val msg: String) : AlbumDetailEvent()
+        data class OpenTrackUrl(val url: String) : AlbumDetailEvent()
     }
 }

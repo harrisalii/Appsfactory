@@ -9,12 +9,12 @@ data class TrackResultDto(
 
     data class AlbumDetailDto(
         @SerializedName("tracks")
-        val tracksInfo: TrackInfoDto
+        val tracksInfo: TrackInfoDto?
     )
 
     data class TrackInfoDto(
         @SerializedName("track")
-        val tracks: List<TrackDto>
+        val tracks: List<TrackDto>?
     )
 
     data class TrackDto(

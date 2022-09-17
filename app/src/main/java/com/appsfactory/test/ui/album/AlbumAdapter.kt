@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.appsfactory.test.databinding.ItemAlbumBinding
 import com.appsfactory.test.domain.album.Album
+import com.appsfactory.test.utils.randomColor
 
 class AlbumAdapter(
     private val onClick: (Album) -> Unit
@@ -40,7 +41,10 @@ class AlbumAdapter(
         fun bind(album: Album) {
             binding.apply {
                 artistName.text = album.name
-                imageView.load(album.imageUrl)
+                imageView.apply {
+                    setBackgroundColor(randomColor())
+                    load(album.imageUrl)
+                }
             }
         }
     }

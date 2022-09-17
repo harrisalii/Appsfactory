@@ -11,7 +11,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.appsfactory.test.R
 import com.appsfactory.test.databinding.FragmentSearchArtistBinding
-import com.appsfactory.test.domain.util.UiState
+import com.appsfactory.test.utils.extensions.doOnQuerySubmit
+import com.appsfactory.test.utils.extensions.isVisible
 import com.appsfactory.test.utils.extensions.progressDialog
 import com.appsfactory.test.utils.extensions.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,8 +43,18 @@ class SearchArtistFragment : Fragment(R.layout.fragment_search_artist) {
 
         binding.apply {
             artistRecyclerView.apply {
-                setHasFixedSize(true)
                 adapter = artistAdapter
+            }
+            searchView.apply {
+                doOnQuerySubmit {
+                    viewModel.onSearchClicked(it)
+                    clearFocus()
+                }
+                requestFocus()
+            }
+            searchBtn.setOnClickListener {
+                viewModel.onSearchClicked(searchView.query.toString())
+                searchView.clearFocus()
             }
         }
 
@@ -54,16 +65,13 @@ class SearchArtistFragment : Fragment(R.layout.fragment_search_artist) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.uiState.collectLatest { state ->
-                        when (state) {
-                            is UiState.Loading -> {
-                                progressDialog.show()
-                            }
-                            is UiState.Success -> {
-                                artistAdapter.submitList(state.data)
-                                progressDialog.dismiss()
-                            }
-                        }
+                    viewModel.isLoading.collectLatest {
+                        progressDialog.isVisible(it)
+                    }
+                }
+                launch {
+                    viewModel.artists.collectLatest {
+                        artistAdapter.submitList(it)
                     }
                 }
                 launch {
@@ -78,7 +86,6 @@ class SearchArtistFragment : Fragment(R.layout.fragment_search_artist) {
                             }
                             is SearchArtistViewModel.SearchArtistEvent.ShowError -> {
                                 showToast(event.error)
-                                progressDialog.dismiss()
                             }
                         }
                     }

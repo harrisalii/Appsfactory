@@ -9,10 +9,17 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/album_image_view"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@color/purple_500" />
+        tools:srcCompat="@color/red_500" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#40000000"
+        app:layout_constraintBottom_toBottomOf="@id/album_image_view"
+        app:layout_constraintTop_toTopOf="@id/album_image_view" />
 
     <TextView
         android:id="@+id/album_name"
@@ -42,17 +49,43 @@
         app:layout_constraintStart_toStartOf="@id/album_name"
         tools:text="Cher" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/favorite_album"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        android:contentDescription="@string/store_album"
+        android:src="@drawable/ic_favorite_border"
+        app:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/album_image_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/album_image_view"
+        app:tint="@color/red_500" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/track_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:paddingVertical="10dp"
+        android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/album_image_view"
         tools:listitem="@layout/item_track" />
+
+    <TextView
+        android:id="@+id/no_results_found"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_data_found"
+        android:textColor="@color/red_500"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/track_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/album_image_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

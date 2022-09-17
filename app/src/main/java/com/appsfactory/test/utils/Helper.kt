@@ -14,3 +14,7 @@ inline fun <reified T> logError(msg: String?) {
 inline fun <reified T> logInfo(msg: String?) {
     Log.i(T::class.java.simpleName, msg.ifNull { "null" })
 }
+
+fun emptyString() = String()
+
+fun randomColor() = (Math.random() * 16777215).toInt() or (0xFF shl 24)
