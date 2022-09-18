@@ -31,7 +31,6 @@ class SearchArtistViewModel @Inject constructor(
             when (result) {
                 is Result.Success -> {
                     val artists = result.data
-
                     if (artists.isEmpty()) {
                         _uiState.emit(UiState.NoDataFound)
                     } else {

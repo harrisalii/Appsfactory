@@ -1,5 +1,7 @@
 package com.appsfactory.test.data.remote.repository
 
+import android.app.Application
+import com.appsfactory.test.R
 import com.appsfactory.test.domain.util.Result
 import com.appsfactory.test.utils.logError
 import kotlinx.coroutines.flow.Flow
@@ -8,8 +10,12 @@ import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
+import javax.inject.Inject
 
 abstract class BaseRepository {
+
+    @Inject
+    lateinit var app: Application
 
     suspend inline fun <reified T : Any, reified V : Any> makeRequest(
         crossinline request: suspend () -> Response<T>,
@@ -21,15 +27,15 @@ abstract class BaseRepository {
                 val dto = result.body()!!
                 emit(Result.Success(dto.response()))
             } else {
-                emit(Result.Error("Request failed. Please try again later."))
+                emit(Result.Error(app.getString(R.string.api_request_failed)))
             }
         } catch (e: IOException) {
-            emit(Result.Error("Please check your internet connection!"))
+            emit(Result.Error(app.getString(R.string.internet_connection_error)))
         } catch (e: HttpException) {
-            emit(Result.Error("Request failed. Please try again later."))
+            emit(Result.Error(app.getString(R.string.api_request_failed)))
         }
     }.catch { e ->
-        logError<BaseRepository>("Flow Error -> ${e.message}")
-        emit(Result.Error("Unknown error occurred."))
+        logError<BaseRepository>(msg = "(${T::class.java}, ${V::class.java}) -> ${e.message}")
+        emit(Result.Error(app.getString(R.string.unknown_error_msg)))
     }
 }

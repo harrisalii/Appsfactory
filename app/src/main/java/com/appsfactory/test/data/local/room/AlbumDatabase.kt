@@ -1,4 +1,4 @@
-package com.appsfactory.test.data.local
+package com.appsfactory.test.data.local.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

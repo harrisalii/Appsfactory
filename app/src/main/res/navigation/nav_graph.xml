@@ -12,7 +12,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.appsfactory.test.ui.home.HomeFragment"
-        android:label="Home"
+        android:label="@string/albums"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_albumDetailFragment"
@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/albumFragment"
         android:name="com.appsfactory.test.ui.album.AlbumFragment"
-        android:label="Top Albums"
+        android:label="@string/top_albums"
         tools:layout="@layout/fragment_album">
         <argument
             android:name="artist"
@@ -33,7 +33,8 @@
     <fragment
         android:id="@+id/searchArtistFragment"
         android:name="com.appsfactory.test.ui.search_artist.SearchArtistFragment"
-        android:label="Search Artist"
+        android:label="@string/search_artist"
+        app:launchSingleTop="true"
         tools:layout="@layout/fragment_search_artist">
         <action
             android:id="@+id/action_searchArtistFragment_to_albumFragment"
@@ -42,7 +43,7 @@
     <fragment
         android:id="@+id/albumDetailFragment"
         android:name="com.appsfactory.test.ui.album_detail.AlbumDetailFragment"
-        android:label="Album Details"
+        android:label="@string/album_details"
         tools:layout="@layout/fragment_album_detail">
         <argument
             android:name="album"

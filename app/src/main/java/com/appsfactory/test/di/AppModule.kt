@@ -3,8 +3,8 @@ package com.appsfactory.test.di
 import android.app.Application
 import androidx.room.Room
 import com.appsfactory.test.BuildConfig
-import com.appsfactory.test.data.local.AlbumDao
-import com.appsfactory.test.data.local.AlbumDatabase
+import com.appsfactory.test.data.local.room.AlbumDao
+import com.appsfactory.test.data.local.room.AlbumDatabase
 import com.appsfactory.test.data.remote.LastFMApi
 import dagger.Module
 import dagger.Provides

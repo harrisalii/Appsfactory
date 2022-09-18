@@ -36,14 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.homeFragment -> binding.toolbar.menu.findItem(R.id.action_search).isVisible =
-                    true
-                else -> binding.toolbar.menu.findItem(R.id.action_search).isVisible = false
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -7,6 +7,11 @@ inline fun <reified T> logDebug(msg: String?) {
     Log.d(T::class.java.simpleName, msg.ifNull { "null" })
 }
 
+fun Any.log(msg: String?) {
+    this::class.java
+    Log.d(this::class.java.simpleName, msg.ifNull { "null" })
+}
+
 inline fun <reified T> logError(msg: String?) {
     Log.e(T::class.java.simpleName, msg.ifNull { "null" })
 }

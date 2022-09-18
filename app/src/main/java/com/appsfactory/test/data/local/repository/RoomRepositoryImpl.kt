@@ -1,6 +1,6 @@
 package com.appsfactory.test.data.local.repository
 
-import com.appsfactory.test.data.local.AlbumDao
+import com.appsfactory.test.data.local.room.AlbumDao
 import com.appsfactory.test.data.mappers.toAlbum
 import com.appsfactory.test.data.mappers.toAlbumDto
 import com.appsfactory.test.domain.album.Album
