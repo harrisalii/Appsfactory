@@ -4,10 +4,10 @@ import com.appsfactory.test.data.mappers.toAlbums
 import com.appsfactory.test.data.mappers.toArtists
 import com.appsfactory.test.data.mappers.toTracks
 import com.appsfactory.test.data.remote.LastFMApi
-import com.appsfactory.test.domain.album.Album
-import com.appsfactory.test.domain.artist.Artist
+import com.appsfactory.test.domain.model.album.Album
+import com.appsfactory.test.domain.model.artist.Artist
+import com.appsfactory.test.domain.model.track.Track
 import com.appsfactory.test.domain.repository.remote.LastFMRepository
-import com.appsfactory.test.domain.track.Track
 import com.appsfactory.test.domain.util.Result
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

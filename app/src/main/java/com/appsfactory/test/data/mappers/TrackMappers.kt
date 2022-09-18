@@ -2,7 +2,7 @@ package com.appsfactory.test.data.mappers
 
 import android.text.format.DateUtils
 import com.appsfactory.test.data.remote.dto.TrackResultDto
-import com.appsfactory.test.domain.track.Track
+import com.appsfactory.test.domain.model.track.Track
 
 fun TrackResultDto.toTracks(): List<Track> {
     return album.tracksInfo?.tracks?.map {

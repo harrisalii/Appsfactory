@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.appsfactory.test.databinding.ItemArtistBinding
-import com.appsfactory.test.domain.artist.Artist
+import com.appsfactory.test.domain.model.artist.Artist
 
 class ArtistAdapter(
     private val onClick: (Artist) -> Unit

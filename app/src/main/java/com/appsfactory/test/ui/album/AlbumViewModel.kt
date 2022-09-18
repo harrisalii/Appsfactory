@@ -3,8 +3,8 @@ package com.appsfactory.test.ui.album
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.appsfactory.test.domain.album.Album
-import com.appsfactory.test.domain.artist.Artist
+import com.appsfactory.test.domain.model.album.Album
+import com.appsfactory.test.domain.model.artist.Artist
 import com.appsfactory.test.domain.repository.remote.LastFMRepository
 import com.appsfactory.test.domain.util.Result
 import com.appsfactory.test.domain.util.UiState

@@ -9,7 +9,7 @@ import com.appsfactory.test.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 fun Context.showToast(msg: String?, length: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(this, msg.ifNull { "null" }, length).show()
+    Toast.makeText(this, msg.toString(), length).show()
 }
 
 fun Context.progressDialog(): AlertDialog {

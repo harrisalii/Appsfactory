@@ -2,7 +2,7 @@ package com.appsfactory.test.ui.search_artist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.appsfactory.test.domain.artist.Artist
+import com.appsfactory.test.domain.model.artist.Artist
 import com.appsfactory.test.domain.repository.remote.LastFMRepository
 import com.appsfactory.test.domain.util.Result
 import com.appsfactory.test.domain.util.UiState

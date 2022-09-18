@@ -1,8 +1,8 @@
 package com.appsfactory.test.di
 
-import com.appsfactory.test.data.local.repository.RoomRepositoryImpl
+import com.appsfactory.test.data.local.repository.LocalRepositoryImpl
 import com.appsfactory.test.data.remote.repository.LastFMRepositoryImpl
-import com.appsfactory.test.domain.repository.local.RoomRepository
+import com.appsfactory.test.domain.repository.local.LocalRepository
 import com.appsfactory.test.domain.repository.remote.LastFMRepository
 import dagger.Binds
 import dagger.Module
@@ -23,6 +23,6 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideRoomRepository(
-        roomRepositoryImpl: RoomRepositoryImpl
-    ): RoomRepository
+        roomRepositoryImpl: LocalRepositoryImpl
+    ): LocalRepository
 }

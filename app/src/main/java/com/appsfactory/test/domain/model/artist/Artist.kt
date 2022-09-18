@@ -1,4 +1,4 @@
-package com.appsfactory.test.domain.artist
+package com.appsfactory.test.domain.model.artist
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

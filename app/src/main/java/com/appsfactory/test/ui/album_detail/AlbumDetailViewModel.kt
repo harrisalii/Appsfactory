@@ -3,10 +3,10 @@ package com.appsfactory.test.ui.album_detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.appsfactory.test.domain.album.Album
-import com.appsfactory.test.domain.repository.local.RoomRepository
+import com.appsfactory.test.domain.model.album.Album
+import com.appsfactory.test.domain.model.track.Track
+import com.appsfactory.test.domain.repository.local.LocalRepository
 import com.appsfactory.test.domain.repository.remote.LastFMRepository
-import com.appsfactory.test.domain.track.Track
 import com.appsfactory.test.domain.util.Result
 import com.appsfactory.test.domain.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class AlbumDetailViewModel @Inject constructor(
     stateHandle: SavedStateHandle,
     private val repository: LastFMRepository,
-    private val roomRepository: RoomRepository
+    private val roomRepository: LocalRepository
 ) : ViewModel() {
 
     private val _album = stateHandle.get<Album>("album")!!

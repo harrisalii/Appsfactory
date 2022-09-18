@@ -34,7 +34,6 @@
         android:id="@+id/searchArtistFragment"
         android:name="com.appsfactory.test.ui.search_artist.SearchArtistFragment"
         android:label="@string/search_artist"
-        app:launchSingleTop="true"
         tools:layout="@layout/fragment_search_artist">
         <action
             android:id="@+id/action_searchArtistFragment_to_albumFragment"

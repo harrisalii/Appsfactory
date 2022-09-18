@@ -1,9 +1,9 @@
 package com.appsfactory.test.domain.repository.local
 
-import com.appsfactory.test.domain.album.Album
+import com.appsfactory.test.domain.model.album.Album
 import kotlinx.coroutines.flow.Flow
 
-interface RoomRepository {
+interface LocalRepository {
     suspend fun insertAlbum(album: Album)
 
     suspend fun insertAlbums(albums: List<Album>)

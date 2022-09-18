@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.appsfactory.test.databinding.ItemTrackBinding
-import com.appsfactory.test.domain.track.Track
+import com.appsfactory.test.domain.model.track.Track
 
 class TrackAdapter(
     private val onClick: (Track) -> Unit

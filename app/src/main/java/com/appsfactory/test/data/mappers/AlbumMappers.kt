@@ -1,7 +1,7 @@
 package com.appsfactory.test.data.mappers
 
 import com.appsfactory.test.data.remote.dto.AlbumResultDto
-import com.appsfactory.test.domain.album.Album
+import com.appsfactory.test.domain.model.album.Album
 
 fun AlbumResultDto.toAlbums(): List<Album> {
     return topAlbums.albums.map {

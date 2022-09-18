@@ -1,23 +1,17 @@
 package com.appsfactory.test.utils
 
 import android.util.Log
-import com.appsfactory.test.utils.extensions.ifNull
 
 inline fun <reified T> logDebug(msg: String?) {
-    Log.d(T::class.java.simpleName, msg.ifNull { "null" })
-}
-
-fun Any.log(msg: String?) {
-    this::class.java
-    Log.d(this::class.java.simpleName, msg.ifNull { "null" })
+    Log.d(T::class.java.simpleName, msg.toString())
 }
 
 inline fun <reified T> logError(msg: String?) {
-    Log.e(T::class.java.simpleName, msg.ifNull { "null" })
+    Log.e(T::class.java.simpleName, msg.toString())
 }
 
 inline fun <reified T> logInfo(msg: String?) {
-    Log.i(T::class.java.simpleName, msg.ifNull { "null" })
+    Log.i(T::class.java.simpleName, msg.toString())
 }
 
 fun emptyString() = String()

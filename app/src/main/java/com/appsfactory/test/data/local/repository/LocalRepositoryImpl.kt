@@ -3,17 +3,17 @@ package com.appsfactory.test.data.local.repository
 import com.appsfactory.test.data.local.room.AlbumDao
 import com.appsfactory.test.data.mappers.toAlbum
 import com.appsfactory.test.data.mappers.toAlbumDto
-import com.appsfactory.test.domain.album.Album
-import com.appsfactory.test.domain.repository.local.RoomRepository
+import com.appsfactory.test.domain.model.album.Album
+import com.appsfactory.test.domain.repository.local.LocalRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RoomRepositoryImpl @Inject constructor(
+class LocalRepositoryImpl @Inject constructor(
     private val albumsDao: AlbumDao
-) : RoomRepository {
+) : LocalRepository {
 
     override suspend fun insertAlbum(album: Album) {
         albumsDao.insertAlbum(album.toAlbumDto())

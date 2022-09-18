@@ -2,8 +2,8 @@ package com.appsfactory.test.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.appsfactory.test.domain.album.Album
-import com.appsfactory.test.domain.repository.local.RoomRepository
+import com.appsfactory.test.domain.model.album.Album
+import com.appsfactory.test.domain.repository.local.LocalRepository
 import com.appsfactory.test.domain.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: RoomRepository
+    private val repository: LocalRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<List<Album>>>(UiState.Loading)

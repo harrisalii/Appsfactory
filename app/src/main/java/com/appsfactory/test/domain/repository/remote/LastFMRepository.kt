@@ -1,8 +1,8 @@
 package com.appsfactory.test.domain.repository.remote
 
-import com.appsfactory.test.domain.album.Album
-import com.appsfactory.test.domain.artist.Artist
-import com.appsfactory.test.domain.track.Track
+import com.appsfactory.test.domain.model.album.Album
+import com.appsfactory.test.domain.model.artist.Artist
+import com.appsfactory.test.domain.model.track.Track
 import com.appsfactory.test.domain.util.Result
 import kotlinx.coroutines.flow.Flow
 

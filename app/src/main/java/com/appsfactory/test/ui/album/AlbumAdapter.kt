@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.appsfactory.test.databinding.ItemAlbumBinding
-import com.appsfactory.test.domain.album.Album
+import com.appsfactory.test.domain.model.album.Album
 import com.appsfactory.test.utils.randomColor
 
 class AlbumAdapter(

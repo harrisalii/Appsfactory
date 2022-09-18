@@ -1,6 +1,6 @@
-package com.appsfactory.test.domain.track
+package com.appsfactory.test.domain.model.track
 
-import com.appsfactory.test.domain.artist.Artist
+import com.appsfactory.test.domain.model.artist.Artist
 
 data class Track(
     val name: String,
