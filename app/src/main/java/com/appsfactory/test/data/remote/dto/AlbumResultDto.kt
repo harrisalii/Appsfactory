@@ -24,7 +24,8 @@ data class AlbumResultDto(
         @SerializedName("artist")
         val artistDto: ArtistResultDto.ArtistDto,
         @SerializedName("image")
-        val images: List<AlbumImageDto>
+        val images: List<AlbumImageDto>,
+        val tracks: List<TrackResultDto.TrackDto>? = null
     )
 
     data class AlbumImageDto(

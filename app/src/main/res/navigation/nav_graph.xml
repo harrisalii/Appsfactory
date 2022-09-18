@@ -25,7 +25,7 @@
         tools:layout="@layout/fragment_album">
         <argument
             android:name="artist"
-            app:argType="com.appsfactory.test.domain.artist.Artist" />
+            app:argType="com.appsfactory.test.domain.model.artist.Artist" />
         <action
             android:id="@+id/action_albumFragment_to_albumDetailFragment"
             app:destination="@id/albumDetailFragment" />
@@ -46,7 +46,7 @@
         tools:layout="@layout/fragment_album_detail">
         <argument
             android:name="album"
-            app:argType="com.appsfactory.test.domain.album.Album" />
+            app:argType="com.appsfactory.test.domain.model.album.Album" />
     </fragment>
 
 </navigation>

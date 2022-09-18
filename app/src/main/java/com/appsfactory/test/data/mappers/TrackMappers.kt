@@ -10,6 +10,18 @@ fun TrackResultDto.toTracks(): List<Track> {
     } ?: emptyList()
 }
 
+fun List<TrackResultDto.TrackDto>.toTracksList(): List<Track> {
+    return map {
+        it.toTrack()
+    }
+}
+
+fun List<Track>.toTracksDtoList(): List<TrackResultDto.TrackDto> {
+    return map {
+        it.toTrackDto()
+    }
+}
+
 fun TrackResultDto.TrackDto.toTrack(): Track {
     return Track(
         name = name,

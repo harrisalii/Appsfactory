@@ -3,6 +3,8 @@ package com.appsfactory.test.data.local.repository
 import com.appsfactory.test.data.local.room.AlbumDao
 import com.appsfactory.test.data.mappers.toAlbum
 import com.appsfactory.test.data.mappers.toAlbumDto
+import com.appsfactory.test.data.mappers.toAlbumsDtoList
+import com.appsfactory.test.data.mappers.toAlbumsList
 import com.appsfactory.test.domain.model.album.Album
 import com.appsfactory.test.domain.repository.local.LocalRepository
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +22,7 @@ class LocalRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insertAlbums(albums: List<Album>) {
-        albumsDao.insertAlbums(albums.map { it.toAlbumDto() })
+        albumsDao.insertAlbums(albums.toAlbumsDtoList())
     }
 
     override suspend fun deleteAlbum(album: Album) {
@@ -35,11 +37,11 @@ class LocalRepositoryImpl @Inject constructor(
         return albumsDao.isExists(name = name)
     }
 
+    override suspend fun getAlbum(name: String): Album? {
+        return albumsDao.getAlbum(name = name)?.toAlbum()
+    }
+
     override fun getAllAlbums(): Flow<List<Album>> {
-        return albumsDao.getAllAlbums().map { albums ->
-            albums.map {
-                it.toAlbum()
-            }
-        }
+        return albumsDao.getAllAlbums().map { it.toAlbumsList() }
     }
 }

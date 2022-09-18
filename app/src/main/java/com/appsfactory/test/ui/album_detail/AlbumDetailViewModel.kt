@@ -22,7 +22,7 @@ import javax.inject.Inject
 class AlbumDetailViewModel @Inject constructor(
     stateHandle: SavedStateHandle,
     private val repository: LastFMRepository,
-    private val roomRepository: LocalRepository
+    private val localRepository: LocalRepository
 ) : ViewModel() {
 
     private val _album = stateHandle.get<Album>("album")!!
@@ -37,10 +37,32 @@ class AlbumDetailViewModel @Inject constructor(
     private val _uiEvents = Channel<AlbumDetailEvent>()
     val uiEvents = _uiEvents.receiveAsFlow()
 
+    private var tracks: List<Track>? = null
+
     init {
         viewModelScope.launch {
-            _isFavorite.value = roomRepository.isExists(name = _album.name)
+            _isFavorite.value = localRepository.isExists(name = _album.name)
+
+            /**
+             * Checking if tracks are already present, if album is marked as favorite
+             */
+            /*if (isFavorite.value) {
+                _uiState.apply {
+                    emit(UiState.Loading)
+                    val tracks = _album.tracks ?: run {
+                        localRepository.getAlbum(_album.name)?.tracks
+                    }
+                    if (tracks.isNullOrEmpty()) {
+                        emit(UiState.NoDataFound)
+                    } else {
+                        emit(UiState.Success(tracks))
+                    }
+                }
+            } else {
+                getTracks(_album)
+            }*/
         }
+
         getTracks(_album)
     }
 
@@ -53,8 +75,8 @@ class AlbumDetailViewModel @Inject constructor(
         ).collectLatest { result ->
             when (result) {
                 is Result.Success -> {
-                    val tracks = result.data
-                    if (tracks.isEmpty()) {
+                    tracks = result.data
+                    if (tracks.isNullOrEmpty()) {
                         _uiState.emit(UiState.NoDataFound)
                     } else {
                         _uiState.emit(UiState.Success(result.data))
@@ -74,10 +96,10 @@ class AlbumDetailViewModel @Inject constructor(
     fun onFavoriteClicked() = viewModelScope.launch {
         _isFavorite.value = !isFavorite.value
 
-        if (_isFavorite.value) {
-            roomRepository.insertAlbum(_album)
+        if (isFavorite.value) {
+            localRepository.insertAlbum(_album.copy(tracks = tracks))
         } else {
-            roomRepository.deleteAlbum(_album)
+            localRepository.deleteAlbum(_album)
         }
     }
 

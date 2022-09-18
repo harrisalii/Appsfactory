@@ -14,5 +14,7 @@ interface LocalRepository {
 
     suspend fun isExists(name: String): Boolean
 
+    suspend fun getAlbum(name: String): Album?
+
     fun getAllAlbums(): Flow<List<Album>>
 }

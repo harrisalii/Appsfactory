@@ -22,6 +22,9 @@ interface AlbumDao {
     @Query("SELECT EXISTS(SELECT * FROM AlbumDto WHERE name = :name)")
     suspend fun isExists(name: String): Boolean
 
+    @Query("SELECT * FROM AlbumDto WHERE name = :name")
+    suspend fun getAlbum(name: String): AlbumResultDto.AlbumDto?
+
     @Query("DELETE FROM AlbumDto")
     suspend fun deleteAllAlbums()
 }

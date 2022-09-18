@@ -7,15 +7,18 @@ import com.appsfactory.test.data.remote.LastFMApi
 import com.appsfactory.test.domain.model.album.Album
 import com.appsfactory.test.domain.model.artist.Artist
 import com.appsfactory.test.domain.model.track.Track
+import com.appsfactory.test.domain.repository.local.LocalRepository
 import com.appsfactory.test.domain.repository.remote.LastFMRepository
 import com.appsfactory.test.domain.util.Result
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class LastFMRepositoryImpl @Inject constructor(
-    private val api: LastFMApi
+    private val api: LastFMApi,
+    private val localRepository: LocalRepository
 ) : LastFMRepository, BaseRepository() {
 
     override suspend fun searchArtist(name: String): Flow<Result<List<Artist>>> {
@@ -41,13 +44,21 @@ class LastFMRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getTracks(artist: String, album: String): Flow<Result<List<Track>>> {
-        return makeRequest(
-            request = {
-                api.getTracks(artist = artist, album = album)
-            },
-            response = {
-                toTracks()
+        val tracks = localRepository.getAlbum(name = album)?.tracks
+
+        return if (tracks != null) {
+            flow {
+                emit(Result.Success(tracks))
             }
-        )
+        } else {
+            makeRequest(
+                request = {
+                    api.getTracks(artist = artist, album = album)
+                },
+                response = {
+                    toTracks()
+                }
+            )
+        }
     }
 }
