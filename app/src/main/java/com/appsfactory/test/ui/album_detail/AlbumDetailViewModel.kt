@@ -31,7 +31,7 @@ class AlbumDetailViewModel @Inject constructor(
     private val _isFavorite = MutableStateFlow(false)
     val isFavorite = _isFavorite.asStateFlow()
 
-    private val _uiState = MutableStateFlow<UiState<List<Track>>>(UiState.Idle)
+    private val _uiState = MutableStateFlow<UiState<List<Track>>>(UiState.Loading)
     val uiState = _uiState.asStateFlow()
 
     private val _uiEvents = Channel<AlbumDetailEvent>()
@@ -42,33 +42,11 @@ class AlbumDetailViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _isFavorite.value = localRepository.isExists(name = _album.name)
-
-            /**
-             * Checking if tracks are already present, if album is marked as favorite
-             */
-            /*if (isFavorite.value) {
-                _uiState.apply {
-                    emit(UiState.Loading)
-                    val tracks = _album.tracks ?: run {
-                        localRepository.getAlbum(_album.name)?.tracks
-                    }
-                    if (tracks.isNullOrEmpty()) {
-                        emit(UiState.NoDataFound)
-                    } else {
-                        emit(UiState.Success(tracks))
-                    }
-                }
-            } else {
-                getTracks(_album)
-            }*/
         }
-
         getTracks(_album)
     }
 
     private fun getTracks(album: Album) = viewModelScope.launch {
-        _uiState.emit(UiState.Loading)
-
         repository.getTracks(
             artist = album.artist.name,
             album = album.name
