@@ -1,10 +1,11 @@
 package com.appsfactory.test.ui.search_artist
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.appsfactory.test.domain.artist.Artist
-import com.appsfactory.test.domain.repository.LastFMRepository
+import com.appsfactory.test.domain.repository.remote.LastFMRepository
 import com.appsfactory.test.domain.util.Result
-import com.appsfactory.test.ui.BaseViewModel
+import com.appsfactory.test.domain.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,21 +18,25 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchArtistViewModel @Inject constructor(
     private val repository: LastFMRepository
-) : BaseViewModel() {
+) : ViewModel() {
 
-    private val _artists = MutableStateFlow<List<Artist>>(emptyList())
-    val artists = _artists.asStateFlow()
+    private val _uiState = MutableStateFlow<UiState<List<Artist>>>(UiState.Idle)
+    val uiState = _uiState.asStateFlow()
 
     private val _uiEvents = Channel<SearchArtistEvent>()
     val uiEvents = _uiEvents.receiveAsFlow()
 
     private fun searchArtist(query: String) = viewModelScope.launch {
-        showLoader()
         repository.searchArtist(query).collectLatest { result ->
-            hideLoader()
             when (result) {
                 is Result.Success -> {
-                    _artists.value = result.data
+                    val artists = result.data
+
+                    if (artists.isEmpty()) {
+                        _uiState.emit(UiState.NoDataFound)
+                    } else {
+                        _uiState.emit(UiState.Success(artists))
+                    }
                 }
                 is Result.Error -> {
                     _uiEvents.send(SearchArtistEvent.ShowError(result.error))
@@ -40,8 +45,10 @@ class SearchArtistViewModel @Inject constructor(
         }
     }
 
-    fun onSearchClicked(query: String) {
-        if (query.isBlank()) return
+    fun onSearchClicked(query: String) = viewModelScope.launch {
+        if (query.isBlank()) return@launch
+
+        _uiState.emit(UiState.Loading)
         searchArtist(query)
     }
 

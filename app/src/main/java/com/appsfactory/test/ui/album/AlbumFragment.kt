@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.appsfactory.test.R
 import com.appsfactory.test.databinding.FragmentAlbumBinding
 import com.appsfactory.test.domain.util.UiState
+import com.appsfactory.test.utils.extensions.isVisible
 import com.appsfactory.test.utils.extensions.progressDialog
+import com.appsfactory.test.utils.extensions.show
 import com.appsfactory.test.utils.extensions.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -57,14 +59,12 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
                 launch {
                     viewModel.uiState.collectLatest { state ->
                         when (state) {
-                            is UiState.Loading -> {
-                                progressDialog.show()
-                            }
-                            is UiState.Success -> {
-                                albumAdapter.submitList(state.data)
-                                progressDialog.dismiss()
-                            }
+                            is UiState.Idle -> return@collectLatest
+                            is UiState.Loading -> progressDialog.show()
+                            is UiState.Success -> albumAdapter.submitList(state.data)
+                            is UiState.NoDataFound -> binding.noResultsFound.root.show()
                         }
+                        progressDialog.isVisible(state is UiState.Loading)
                     }
                 }
                 launch {

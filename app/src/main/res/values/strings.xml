@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MusicPro</string>
+    <string name="app_name">Music Pro</string>
     <string name="search_artist">Search Artist</string>
     <string name="search">Search</string>
     <string name="enter_artist_name">Enter artist name</string>

@@ -1,4 +1,4 @@
-package com.appsfactory.test.domain.repository
+package com.appsfactory.test.domain.repository.remote
 
 import com.appsfactory.test.domain.album.Album
 import com.appsfactory.test.domain.artist.Artist

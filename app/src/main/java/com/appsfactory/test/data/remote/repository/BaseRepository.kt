@@ -1,4 +1,4 @@
-package com.appsfactory.test.data.repository
+package com.appsfactory.test.data.remote.repository
 
 import com.appsfactory.test.domain.util.Result
 import com.appsfactory.test.utils.logError

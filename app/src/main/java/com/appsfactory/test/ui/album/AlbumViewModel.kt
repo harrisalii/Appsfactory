@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.appsfactory.test.domain.album.Album
 import com.appsfactory.test.domain.artist.Artist
-import com.appsfactory.test.domain.repository.LastFMRepository
+import com.appsfactory.test.domain.repository.remote.LastFMRepository
 import com.appsfactory.test.domain.util.Result
 import com.appsfactory.test.domain.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,7 +39,12 @@ class AlbumViewModel @Inject constructor(
         repository.getTopAlbumsOfArtist(artist.name).collectLatest { result ->
             when (result) {
                 is Result.Success -> {
-                    _uiState.emit(UiState.Success(result.data))
+                    val albums = result.data
+                    if (albums.isEmpty()) {
+                        _uiState.emit(UiState.NoDataFound)
+                    } else {
+                        _uiState.emit(UiState.Success(albums))
+                    }
                 }
                 is Result.Error -> {
                     _uiEvents.send(AlbumEvent.ShowError(result.error))

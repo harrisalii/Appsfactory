@@ -1,4 +1,4 @@
-package com.appsfactory.test.data.repository
+package com.appsfactory.test.data.remote.repository
 
 import com.appsfactory.test.data.mappers.toAlbums
 import com.appsfactory.test.data.mappers.toArtists
@@ -6,7 +6,7 @@ import com.appsfactory.test.data.mappers.toTracks
 import com.appsfactory.test.data.remote.LastFMApi
 import com.appsfactory.test.domain.album.Album
 import com.appsfactory.test.domain.artist.Artist
-import com.appsfactory.test.domain.repository.LastFMRepository
+import com.appsfactory.test.domain.repository.remote.LastFMRepository
 import com.appsfactory.test.domain.track.Track
 import com.appsfactory.test.domain.util.Result
 import kotlinx.coroutines.flow.Flow

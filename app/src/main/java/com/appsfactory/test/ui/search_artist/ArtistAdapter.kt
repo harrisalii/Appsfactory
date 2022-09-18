@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.appsfactory.test.databinding.ItemArtistBinding
 import com.appsfactory.test.domain.artist.Artist
 
@@ -41,7 +40,7 @@ class ArtistAdapter(
             binding.apply {
                 artistName.text = artist.name
                 url.text = artist.url
-                imageView.load(artist.imageUrl)
+                //imageView.load(artist.imageUrl)
             }
         }
     }

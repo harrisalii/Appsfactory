@@ -17,7 +17,6 @@ data class AlbumResultDto(
     @Entity
     data class AlbumDto(
         @PrimaryKey
-        val id: Int? = null,
         @SerializedName("name")
         val name: String,
         @SerializedName("url")

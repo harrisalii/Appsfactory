@@ -11,10 +11,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.appsfactory.test.R
 import com.appsfactory.test.databinding.FragmentSearchArtistBinding
-import com.appsfactory.test.utils.extensions.doOnQuerySubmit
-import com.appsfactory.test.utils.extensions.isVisible
-import com.appsfactory.test.utils.extensions.progressDialog
-import com.appsfactory.test.utils.extensions.showToast
+import com.appsfactory.test.domain.util.UiState
+import com.appsfactory.test.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -65,13 +63,17 @@ class SearchArtistFragment : Fragment(R.layout.fragment_search_artist) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.isLoading.collectLatest {
-                        progressDialog.isVisible(it)
-                    }
-                }
-                launch {
-                    viewModel.artists.collectLatest {
-                        artistAdapter.submitList(it)
+                    viewModel.uiState.collectLatest { state ->
+                        when (state) {
+                            is UiState.Idle -> return@collectLatest
+                            is UiState.Loading -> progressDialog.show()
+                            is UiState.Success -> artistAdapter.submitList(state.data)
+                            is UiState.NoDataFound -> {
+                                binding.noResultsFound.root.show()
+                                artistAdapter.submitList(null)
+                            }
+                        }
+                        progressDialog.isVisible(state is UiState.Loading)
                     }
                 }
                 launch {
