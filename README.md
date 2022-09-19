@@ -2,8 +2,6 @@
 
 MVVM, Clean Architecture, SOLID Principles. This app uses LastFM Api.
 
-![Screenshot_20220919-090902]()
-![Screenshot_20220919-090914]()
 
 ## Screenshots (Light Mode)
 <p float="left">
