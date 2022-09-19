@@ -40,7 +40,6 @@ class ArtistAdapter(
             binding.apply {
                 artistName.text = artist.name
                 url.text = artist.url
-                //imageView.load(artist.imageUrl)
             }
         }
     }

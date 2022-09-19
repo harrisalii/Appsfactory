@@ -38,6 +38,7 @@ class SearchArtistViewModel @Inject constructor(
                     }
                 }
                 is Result.Error -> {
+                    _uiState.emit(UiState.NoDataFound)
                     _uiEvents.send(SearchArtistEvent.ShowError(result.error))
                 }
             }

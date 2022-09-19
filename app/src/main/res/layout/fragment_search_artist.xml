@@ -32,6 +32,7 @@
         android:letterSpacing="0"
         android:minWidth="0dp"
         android:minHeight="0dp"
+        android:textColor="@color/force_white"
         android:paddingVertical="12dp"
         android:stateListAnimator="@null"
         android:text="@string/search"

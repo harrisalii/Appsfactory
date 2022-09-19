@@ -38,7 +38,7 @@ class TrackAdapter(
 
         fun bind(track: Track) {
             binding.apply {
-                trackName.text = track.name
+                trackName.text = track.name.trim()
                 duration.text = track.duration
 
                 val count = adapterPosition + 1

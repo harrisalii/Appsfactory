@@ -3,6 +3,7 @@ package com.appsfactory.test.ui.album_detail
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -13,8 +14,9 @@ import coil.transform.BlurTransformation
 import com.appsfactory.test.R
 import com.appsfactory.test.databinding.FragmentAlbumDetailBinding
 import com.appsfactory.test.domain.util.UiState
+import com.appsfactory.test.utils.extensions.isVisible
+import com.appsfactory.test.utils.extensions.openUrl
 import com.appsfactory.test.utils.extensions.progressDialog
-import com.appsfactory.test.utils.extensions.show
 import com.appsfactory.test.utils.extensions.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -79,15 +81,16 @@ class AlbumDetailFragment : Fragment(R.layout.fragment_album_detail) {
                         when (state) {
                             is UiState.Idle -> return@collectLatest
                             is UiState.Loading -> progressDialog.show()
-                            is UiState.Success -> {
-                                trackAdapter.submitList(state.data)
-                                progressDialog.dismiss()
-                            }
-                            is UiState.NoDataFound -> {
-                                binding.noResultsFound.show()
-                                progressDialog.dismiss()
-                            }
+                            is UiState.Success -> trackAdapter.submitList(state.data)
+                            is UiState.NoDataFound -> trackAdapter.submitList(null)
                         }
+
+                        binding.apply {
+                            noResultsFound.root.isVisible = state is UiState.NoDataFound
+                            favoriteAlbum.isEnabled =
+                                state is UiState.Success || state is UiState.NoDataFound
+                        }
+                        progressDialog.isVisible(state is UiState.Loading)
                     }
                 }
                 launch {
@@ -98,7 +101,7 @@ class AlbumDetailFragment : Fragment(R.layout.fragment_album_detail) {
                                 progressDialog.dismiss()
                             }
                             is AlbumDetailViewModel.AlbumDetailEvent.OpenTrackUrl -> {
-
+                                openUrl(event.url)
                             }
                         }
                     }

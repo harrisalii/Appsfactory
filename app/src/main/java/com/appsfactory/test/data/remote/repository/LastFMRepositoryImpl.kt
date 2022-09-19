@@ -45,20 +45,17 @@ class LastFMRepositoryImpl @Inject constructor(
 
     override suspend fun getTracks(artist: String, album: String): Flow<Result<List<Track>>> {
         val tracks = localRepository.getAlbum(name = album)?.tracks
-
-        return if (tracks != null) {
+        return tracks?.let {
             flow {
-                emit(Result.Success(tracks))
+                emit(Result.Success(it))
             }
-        } else {
-            makeRequest(
-                request = {
-                    api.getTracks(artist = artist, album = album)
-                },
-                response = {
-                    toTracks()
-                }
-            )
-        }
+        } ?: makeRequest(
+            request = {
+                api.getTracks(artist = artist, album = album)
+            },
+            response = {
+                toTracks()
+            }
+        )
     }
 }

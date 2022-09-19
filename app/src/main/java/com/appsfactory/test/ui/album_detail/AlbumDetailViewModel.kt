@@ -57,7 +57,7 @@ class AlbumDetailViewModel @Inject constructor(
                     if (tracks.isNullOrEmpty()) {
                         _uiState.emit(UiState.NoDataFound)
                     } else {
-                        _uiState.emit(UiState.Success(result.data))
+                        _uiState.emit(UiState.Success(tracks!!))
                     }
                 }
                 is Result.Error -> {

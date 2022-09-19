@@ -11,5 +11,5 @@ data class Album(
     val url: String,
     val artist: Artist,
     val imageUrl: String,
-    val tracks: List<Track>? = null
+    val tracks: List<Track>?
 ) : Parcelable
