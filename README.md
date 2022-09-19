@@ -2,6 +2,9 @@
 
 MVVM, Clean Architecture, SOLID Principles. This app uses LastFM Api.
 
+# Demo
+https://drive.google.com/file/d/1vIkvkqywpHTXmKBZAjNLY3SfKuIYcAlf/view?usp=sharing
+
 
 ## Screenshots (Light Mode)
 <p float="left">
