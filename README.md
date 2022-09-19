@@ -1,10 +1,9 @@
 # Music-Management-App
-Music Management App 
 
 MVVM, Clean Architecture, SOLID Principles. This app uses LastFM Api.
 
 
-# Screenshots (Light Mode)
+### Screenshots (Light Mode)
 <p float="left">
   <img src="https://user-images.githubusercontent.com/106669990/190946440-cca28866-62c6-4e9c-9a52-4f66d44ce9f3.png" width="150" />
   <img src="https://user-images.githubusercontent.com/106669990/190946459-d995a485-2b18-43fc-b206-17c347e9cbfa.png" width="150" /> 
@@ -13,7 +12,7 @@ MVVM, Clean Architecture, SOLID Principles. This app uses LastFM Api.
   <img src="https://user-images.githubusercontent.com/106669990/190946463-17742920-30a6-4f49-8260-9c79d11650b8.png" width="150" /> 
 </p>
 
-# Screenshots (Dark Mode)
+### Screenshots (Dark Mode)
 <p float="left">
   <img src="https://user-images.githubusercontent.com/106669990/190946467-cab162b3-1a96-473f-b335-ddc12a11d3ba.png" width="150" />
   <img src="https://user-images.githubusercontent.com/106669990/190946481-93797df3-f2f4-4867-8915-5d1aacc96445.png" width="150" />
