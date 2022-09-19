@@ -3,11 +3,11 @@ Music Management App
 
 # Screenshots (Ligh Mode)
 <p float="left">
-  <img src="https://user-images.githubusercontent.com/106669990/190946440-cca28866-62c6-4e9c-9a52-4f66d44ce9f3.png" width="200" />
-  <img src="https://user-images.githubusercontent.com/106669990/190946459-d995a485-2b18-43fc-b206-17c347e9cbfa.png" width="200" /> 
-  <img src="https://user-images.githubusercontent.com/106669990/190946460-2ed9c0df-53d7-489d-a1b4-0374b8129c67.png" width="200" />
-  <img src="https://user-images.githubusercontent.com/106669990/190946461-91666c88-df4c-415e-a8b2-14c6f601bb63.png" width="200" />
-  <img src="https://user-images.githubusercontent.com/106669990/190946463-17742920-30a6-4f49-8260-9c79d11650b8.png" width="200" /> 
+  <img src="https://user-images.githubusercontent.com/106669990/190946440-cca28866-62c6-4e9c-9a52-4f66d44ce9f3.png" width="400" />
+  <img src="https://user-images.githubusercontent.com/106669990/190946459-d995a485-2b18-43fc-b206-17c347e9cbfa.png" width="400" /> 
+  <img src="https://user-images.githubusercontent.com/106669990/190946460-2ed9c0df-53d7-489d-a1b4-0374b8129c67.png" width="400" />
+  <img src="https://user-images.githubusercontent.com/106669990/190946461-91666c88-df4c-415e-a8b2-14c6f601bb63.png" width="400" />
+  <img src="https://user-images.githubusercontent.com/106669990/190946463-17742920-30a6-4f49-8260-9c79d11650b8.png" width="400" /> 
 </p>
 
 # Screenshots (Dark Mode)
