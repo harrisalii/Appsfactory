@@ -24,5 +24,3 @@ https://drive.google.com/file/d/1vIkvkqywpHTXmKBZAjNLY3SfKuIYcAlf/view?usp=shari
   <img src="https://user-images.githubusercontent.com/106669990/190946493-8b9d3826-790a-4c6c-9469-7d6213a807c5.png" width="150" />
 </p>
 
-[Android Test Task.pdf](https://github.com/harrisalii/Music-Management-App/files/9596156/Android.Test.Task.pdf)
-
