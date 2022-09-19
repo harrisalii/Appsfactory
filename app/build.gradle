@@ -26,14 +26,12 @@ android {
     buildTypes {
         debug {
             buildConfigField 'String', 'LAST_FM_API_KEY', props['LAST_FM_API_KEY']
-            buildConfigField 'String', 'LAST_FM_SHARED_SECRET', props['LAST_FM_SHARED_SECRET']
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             buildConfigField 'String', 'LAST_FM_API_KEY', props['LAST_FM_API_KEY']
-            buildConfigField 'String', 'LAST_FM_SHARED_SECRET', props['LAST_FM_SHARED_SECRET']
         }
     }
     compileOptions {
