@@ -1,7 +1,7 @@
 # Music-Management-App
 Music Management App 
 
-MVVM, Clean Architecture, SOLID Principles
+MVVM, Clean Architecture, SOLID Principles. This app uses LastFM Api.
 
 
 # Screenshots (Ligh Mode)
