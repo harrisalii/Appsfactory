@@ -3,7 +3,6 @@ package com.appsfactory.test.ui.home
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -14,6 +13,7 @@ import com.appsfactory.test.R
 import com.appsfactory.test.domain.model.album.Album
 import com.appsfactory.test.domain.model.artist.Artist
 import com.appsfactory.test.launchFragmentInHiltContainer
+import com.appsfactory.test.ui.album.AlbumAdapter
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -41,27 +41,32 @@ class HomeFragmentTest {
     @Test
     fun clickOnAlbum_navigateToAlbumDetailsFragment() {
         val navController = mock(NavController::class.java)
+
+        val testAlbum = Album(
+            "",
+            "",
+            Artist("", "", ""),
+            "",
+            listOf()
+        )
+
         launchFragmentInHiltContainer<HomeFragment> {
             Navigation.setViewNavController(requireView(), navController)
+            /*
+            * Need to make albumAdapter public for test to succeed.
+            * */
+            //albumAdapter.submitList(listOf(testAlbum))
         }
 
-        onView(withId(R.id.albums_recycler_view)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+        onView(withId(R.id.album_recycler_view)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<AlbumAdapter.AlbumViewHolder>(
                 0,
                 click()
             )
         )
 
         verify(navController).navigate(
-            HomeFragmentDirections.actionHomeFragmentToAlbumDetailFragment(
-                Album(
-                    "",
-                    "",
-                    Artist("", "", ""),
-                    "",
-                    listOf()
-                )
-            )
+            HomeFragmentDirections.actionHomeFragmentToAlbumDetailFragment(testAlbum)
         )
     }
 

@@ -15,8 +15,8 @@ class LocalFakeRepository : LocalRepository {
     private val albums = mutableListOf<AlbumResultDto.AlbumDto>()
     private val flow = MutableStateFlow<List<AlbumResultDto.AlbumDto>>(albums)
 
-    private fun emit(value: List<AlbumResultDto.AlbumDto>) {
-        albums.addAll(value)
+    fun addAlbums(value: List<Album>) {
+        albums.addAll(value.toAlbumsDtoList())
         refreshFlow()
     }
 

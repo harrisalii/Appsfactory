@@ -5,33 +5,22 @@ import com.appsfactory.test.domain.model.artist.Artist
 import com.appsfactory.test.domain.model.track.Track
 import com.appsfactory.test.domain.util.Result
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 
 class LastFMFakeRepository : LastFMRepository {
 
-    private val albums = mutableListOf<Album>()
-
-    private fun refreshFlow() {
-
-    }
-
     private var shouldReturnNetworkError = false
 
-    private val flowOfArtists = MutableStateFlow<List<Artist>>(emptyList())
-    private val flowOfTracks = MutableStateFlow<List<Track>>(emptyList())
-    private val flowOfAlbums = MutableStateFlow<List<Album>>(emptyList())
-
-    fun setShouldReturnNetworkError(value: Boolean) {
-        shouldReturnNetworkError = value
-    }
+    private val artists = mutableListOf<Artist>()
+    private val tracks = mutableListOf<Track>()
+    private val albums = mutableListOf<Album>()
 
     override suspend fun searchArtist(name: String): Flow<Result<List<Artist>>> {
         return flow {
             if (shouldReturnNetworkError) {
                 emit(Result.Error("Error occurred"))
             } else {
-                emit(Result.Success(listOf()))
+                emit(Result.Success(artists))
             }
         }
     }
@@ -41,7 +30,7 @@ class LastFMFakeRepository : LastFMRepository {
             if (shouldReturnNetworkError) {
                 emit(Result.Error("Error occurred"))
             } else {
-                emit(Result.Success(listOf()))
+                emit(Result.Success(albums.filter { it.artist.name == name }))
             }
         }
     }
@@ -51,8 +40,24 @@ class LastFMFakeRepository : LastFMRepository {
             if (shouldReturnNetworkError) {
                 emit(Result.Error("Error occurred"))
             } else {
-                emit(Result.Success(listOf()))
+                emit(Result.Success(tracks))
             }
         }
+    }
+
+    fun setShouldReturnNetworkError(value: Boolean) {
+        shouldReturnNetworkError = value
+    }
+
+    fun updateArtists(artists: List<Artist>) {
+        this.artists.addAll(artists)
+    }
+
+    fun updateTracks(tracks: List<Track>) {
+        this.tracks.addAll(tracks)
+    }
+
+    fun updateAlbums(albums: List<Album>) {
+        this.albums.addAll(albums)
     }
 }

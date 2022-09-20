@@ -49,6 +49,8 @@ class SearchArtistViewModel @Inject constructor(
         if (isQueryValid(query)) {
             _uiState.emit(UiState.Loading)
             searchArtist(query)
+        } else {
+            _uiState.emit(UiState.Idle)
         }
     }
 
