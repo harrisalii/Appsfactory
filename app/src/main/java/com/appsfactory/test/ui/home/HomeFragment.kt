@@ -1,8 +1,12 @@
 package com.appsfactory.test.ui.home
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -50,6 +54,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         }
 
+        initMenu()
         initObservers()
     }
 
@@ -82,6 +87,26 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
             }
         }
+    }
+
+    private fun initMenu() {
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_main, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.action_search -> {
+                        val direction =
+                            HomeFragmentDirections.actionMainActivityToSearchArtistFragment()
+                        findNavController().navigate(direction)
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     override fun onDestroyView() {

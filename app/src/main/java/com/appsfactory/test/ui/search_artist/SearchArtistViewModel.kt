@@ -46,11 +46,13 @@ class SearchArtistViewModel @Inject constructor(
     }
 
     fun onSearchClicked(query: String) = viewModelScope.launch {
-        if (query.isBlank()) return@launch
-
-        _uiState.emit(UiState.Loading)
-        searchArtist(query)
+        if (isQueryValid(query)) {
+            _uiState.emit(UiState.Loading)
+            searchArtist(query)
+        }
     }
+
+    private fun isQueryValid(query: String): Boolean = query.isNotBlank()
 
     fun onArtistClicked(artist: Artist) = viewModelScope.launch {
         _uiEvents.send(SearchArtistEvent.NavigateToAlbumScreen(artist))

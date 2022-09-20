@@ -4,8 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.appsfactory.test.utils.emptyString
 
-fun Fragment.showToast(msg: String?, length: Int = Toast.LENGTH_SHORT) {
+fun Fragment.showToast(msg: String? = emptyString(), length: Int = Toast.LENGTH_SHORT) {
     requireContext().showToast(msg = msg, length = length)
 }
 
