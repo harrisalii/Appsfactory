@@ -2,7 +2,6 @@ package com.appsfactory.test.di
 
 import android.app.Application
 import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import com.appsfactory.test.data.local.room.AlbumDatabase
 import dagger.Module
 import dagger.Provides
@@ -20,7 +19,7 @@ object TestAppModule {
         app: Application
     ): AlbumDatabase {
         return Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
+            app,
             AlbumDatabase::class.java
         ).allowMainThreadQueries().build()
     }
