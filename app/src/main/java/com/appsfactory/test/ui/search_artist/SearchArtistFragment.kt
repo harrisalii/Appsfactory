@@ -44,9 +44,8 @@ class SearchArtistFragment : Fragment(R.layout.fragment_search_artist) {
         }
 
         binding.apply {
-            artistRecyclerView.apply {
-                adapter = artistAdapter
-            }
+            artistRecyclerView.adapter = artistAdapter
+
             searchView.apply {
                 doOnQuerySubmit {
                     viewModel.onSearchClicked(it)
