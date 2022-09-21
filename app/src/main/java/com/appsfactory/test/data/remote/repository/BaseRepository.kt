@@ -17,6 +17,16 @@ abstract class BaseRepository {
     @Inject
     lateinit var app: Application
 
+    /**
+     * @author Harris
+     * @param T -> DTO
+     * @param V -> Domain
+     * @param request represents network call and return Response<T> where T is Dto
+     * @param response represents extension function on T to perform mapping for domain model
+     * and return V which is domain model for Dto
+     * @return flow of Result<V> where V is domain model.
+     **/
+
     suspend inline fun <reified T : Any, reified V : Any> makeRequest(
         crossinline request: suspend () -> Response<T>,
         crossinline response: suspend T.() -> V
