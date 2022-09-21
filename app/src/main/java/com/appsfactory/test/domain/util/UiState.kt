@@ -1,5 +1,8 @@
 package com.appsfactory.test.domain.util
 
+/**
+ * @author Harris
+ */
 sealed class UiState<out T : Any> {
     object Idle : UiState<Nothing>()
     object Loading : UiState<Nothing>()

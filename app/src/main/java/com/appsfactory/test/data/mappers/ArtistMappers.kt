@@ -3,12 +3,6 @@ package com.appsfactory.test.data.mappers
 import com.appsfactory.test.data.remote.dto.ArtistResultDto
 import com.appsfactory.test.domain.model.artist.Artist
 
-fun ArtistResultDto.toArtists(): List<Artist> {
-    return results.artistMatches.artists.map {
-        it.toArtist()
-    }
-}
-
 fun ArtistResultDto.ArtistDto.toArtist(): Artist {
     return Artist(
         name = name,
@@ -23,4 +17,10 @@ fun Artist.toArtistDto(): ArtistResultDto.ArtistDto {
         url = url,
         images = listOf(ArtistResultDto.ArtistImageDto(url = imageUrl))
     )
+}
+
+fun ArtistResultDto.toArtists(): List<Artist> {
+    return results.artistMatches.artists.map {
+        it.toArtist()
+    }
 }

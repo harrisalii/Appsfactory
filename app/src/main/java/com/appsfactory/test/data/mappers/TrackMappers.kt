@@ -4,24 +4,6 @@ import android.text.format.DateUtils
 import com.appsfactory.test.data.remote.dto.TrackResultDto
 import com.appsfactory.test.domain.model.track.Track
 
-fun TrackResultDto.toTracks(): List<Track> {
-    return album.tracksInfo?.tracks?.map {
-        it.toTrack()
-    } ?: emptyList()
-}
-
-fun List<TrackResultDto.TrackDto>.toTracksList(): List<Track> {
-    return map {
-        it.toTrack()
-    }
-}
-
-fun List<Track>.toTracksDtoList(): List<TrackResultDto.TrackDto> {
-    return map {
-        it.toTrackDto()
-    }
-}
-
 fun TrackResultDto.TrackDto.toTrack(): Track {
     return Track(
         name = name,
@@ -40,4 +22,22 @@ fun Track.toTrackDto(): TrackResultDto.TrackDto {
         artistDto = artist.toArtistDto(),
         duration = duration.toLong()
     )
+}
+
+fun TrackResultDto.toTracks(): List<Track> {
+    return album.tracksInfo?.tracks?.map {
+        it.toTrack()
+    } ?: emptyList()
+}
+
+fun List<TrackResultDto.TrackDto>.toTracksList(): List<Track> {
+    return map {
+        it.toTrack()
+    }
+}
+
+fun List<Track>.toTracksDtoList(): List<TrackResultDto.TrackDto> {
+    return map {
+        it.toTrackDto()
+    }
 }
