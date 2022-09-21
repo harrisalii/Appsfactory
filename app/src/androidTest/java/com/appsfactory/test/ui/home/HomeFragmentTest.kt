@@ -1,13 +1,13 @@
 package com.appsfactory.test.ui.home
 
-import androidx.appcompat.widget.AppCompatImageButton
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.filters.MediumTest
 import com.appsfactory.test.R
 import com.appsfactory.test.domain.model.album.Album
@@ -17,8 +17,6 @@ import com.appsfactory.test.ui.album.AlbumAdapter
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.hamcrest.CoreMatchers.instanceOf
-import org.hamcrest.Matchers.allOf
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -77,11 +75,8 @@ class HomeFragmentTest {
             Navigation.setViewNavController(requireView(), navController)
         }
 
-        onView(
-            allOf(
-                instanceOf(AppCompatImageButton::class.java), withParent(withId(R.id.toolbar))
-            )
-        ).perform(click())
+        Espresso.openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext())
+        onView(withId(R.id.action_search)).perform(click())
 
         verify(navController).navigate(
             HomeFragmentDirections.actionMainActivityToSearchArtistFragment()
